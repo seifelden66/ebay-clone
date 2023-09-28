@@ -51,12 +51,6 @@ export default function TopMenu() {
                             <div className="border-b" />
                             <ul className="bg-white">
                                 <li className="text-[11px] py-2 px-4 w-full text-blue-500
-                                    hover:underline hover:text-blue-600 cursor-pointer">
-                                    <Link href="/orders">
-                                        My Orders
-                                    </Link>
-                                </li>
-                                <li className="text-[11px] py-2 px-4 w-full text-blue-500
                                     hover:underline hover:text-blue-600 cursor-pointer"
                                     onClick={()=>{user.signOut(); setIsMenu(false)}}>
                                     sign out
@@ -64,10 +58,7 @@ export default function TopMenu() {
                             </ul>
                         </div>
                     </li>
-                    <li className='px-3 hover:underline cursor-pointer'>
-                        Daily Deals
-                    </li>
-                    <li className='px-3 hover:underline cursor-pointer'>
+                    <li className='px-3 hidden md:block hover:underline cursor-pointer'>
                         Help & Contact
                     </li>
                 </ul>
@@ -75,11 +66,6 @@ export default function TopMenu() {
                     className="flex items-center 
                     text-[11px] text-[#333333] px-2 
                     h-8">
-                    <li className="flex items-center gap-2 px-3
-                        hover:underline cursor-pointer">
-                        <img src="/images/uk.png" alt="img" width={32} />
-                        Ship To
-                    </li>
                     <li className="px-3 hover:underline cursor:pointer">
                         <Link href="/cart">
                         <div className="relative">

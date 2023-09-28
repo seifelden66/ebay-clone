@@ -41,7 +41,7 @@ export default function MainLayout() {
             <div id="MainHeader" className="border-b">
                 <nav className="flex items-center justify-between w-full mx-auto max-w-[1200px]">
                     <div className="flex items-center w-full bg-white">
-                        <div className="flex lg:justify-start justify-between gap-10 max-w-[1150px] w-full px-3 py-5 mx-auto">
+                        <div className="flex lg:justify-start justify-between gap-2 max-w-[1150px] w-full px-3 py-5 mx-auto">
                             <Link href="/">
                                 <img width="120" src="/images/logo.svg" />
                             </Link>
@@ -63,7 +63,7 @@ export default function MainLayout() {
                                                     text-sm
                                                     pl-3
                                                     focus:outline-none
-                                                "
+                                                "   
                                                 onChange={handleSearchName}
                                                 placeholder="Search for anything"
                                                 type="text"
@@ -92,11 +92,10 @@ export default function MainLayout() {
 
                                         </div>
 
-                                        <button className="flex items-center bg-blue-600 text-sm font-semibold text-white p-[11px] ml-2 px-14">
+                                        <button className="flex items-center bg-blue-600 text-sm font-semibold text-white p-3 ml-2 px-5">
                                             Search
                                         </button>
 
-                                        <div className="text-xs px-2 hover:text-blue-500 cursor-pointer">Advanced</div>
                                     </div>
                                 </div>
                             </div>

@@ -32,12 +32,12 @@ export default function Product({ params }) {
     <>
       <MainLayout>
 
-        <div className="max-w-[1200px] mx-auto">
-          <div className="flex px-4 py-10">
+        <div className="max-w-[1200px] mx-auto text-center md:text-left">
+          <div className="grid place-items-center md:flex px-4 py-10">
 
             {product?.url 
-              ? <img className="w-[40%] rounded-lg" src={product?.url+'/280'} /> 
-              : <div className="w-[40%]"></div> 
+              ? <img alt="img" className="w-[70%] md:w-[40%] rounded-lg" src={product?.url+'/280'} /> 
+              : <div className="w-full md:w-[40%] "></div> 
             }
 
             <div className="px-4 w-full">
@@ -59,7 +59,7 @@ export default function Product({ params }) {
                   <div className="flex items-center">
                     Price: 
                     {product?.price 
-                      ? <div className="font-bold text-[20px] ml-2">
+                      ? <div className="font-bold md:text-[20px] ml-2">
                           GBP £{(product?.price / 100).toFixed(2)}
                         </div> 
                     : null }
@@ -75,7 +75,7 @@ export default function Product({ params }) {
                       }
                     }} 
                     className={`
-                      text-white py-2 px-20 rounded-full cursor-pointer 
+                      text-white py-2 px-4 md:px-20 rounded-full cursor-pointer 
                       ${cart.isItemAdded ? 'bg-[#e9a321] hover:bg-[#bf851a]' : 'bg-[#3498C9] hover:bg-[#0054A0]'}
                     `}
                   >

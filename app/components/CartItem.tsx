@@ -15,10 +15,10 @@ export default function CartItem({ product }) {
 
   return (
     <>
-        <div className="relative flex justify-start my-2 border w-full p-6">
-            <img src={product?.url+'/150'} className="rounded-md w-[150px] h-[150px]" />
+        <div className="flex justify-between items-center border w-full p-6">
+            <img alt="image" src={product?.url+'/150'} className="rounded-md w-[150px] h-[150px]" />
 
-            <div className="overflow-hidden pl-2 w-full">
+            <div className="overflow-hidden pl-2 w-full ml-auto">
                 <div className="flex items-center justify-between w-full">
                     <div className="flex items-center font-semibold justify-between w-[400px] text-[16px] underline">
                         {product?.title}
@@ -36,7 +36,7 @@ export default function CartItem({ product }) {
                     {product?.description.substring(0, 150)}...
                 </div>
 
-                <div className="absolute right-0 bottom-0 p-4 text-sm">
+                <div className="">
                     <button onClick={() => removeItemFromCart()} className="underline text-blue-500">
                         Remove
                     </button>

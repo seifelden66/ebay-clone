@@ -34,7 +34,7 @@ const SimilarProducts: React.FC<SimilarProductProps> = ({product}) => {
             <div className="font-bold text-2xl py-2 mt-4">Similar sponsored items</div>
 
             {products.length > 0 ?
-              <div className="grid grid-cols-5 gap-4">
+              <div className="grid grid-cols-2 overflow-hidden md:grid-cols-5 gap-4">
                 {products.map(product => (
                     <Product key={product.id} product={product} />
                 ))}

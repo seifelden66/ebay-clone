@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import Link from 'next/link'
 import Product from "./Product"
 import { BiLoader } from 'react-icons/bi'
@@ -6,44 +6,25 @@ interface SimilarProductProps{
     product:any
 }
 const SimilarProducts: React.FC<SimilarProductProps> = ({product}) => {
-    const products = [
-        {
-          id:1,
-          title:'hk',
-          description:'lordgjglsdjgajhgdsjkgem19',
-          url:'https://picsum.photos/id/7',
-          price:2500
-        },
-        {
-          id:2,
-          title:'ddcds',
-          description:'lorem19afhkafdhkadhkjdshalkhdsa',
-          url:'https://picsum.photos/id/20',
-          price:1999
-        },
-        {
-            id:3,
-            title:'ddcds',
-            description:'lorem19afhkafdhkadhkjdshalkhdsa',
-            url:'https://picsum.photos/id/20',
-            price:1999
-          },
-          {
-            id:4,
-            title:'ddcds',
-            description:'lorem19afhkafdhkadhkjdshalkhdsa',
-            url:'https://picsum.photos/id/20',
-            price:1999
-          },
-          {
-            id:5,
-            title:'ddcds',
-            description:'lorem19afhkafdhkadhkjdshalkhdsa',
-            url:'https://picsum.photos/id/20',
-            price:1999
-          },
-        
-      ]
+    const [products, setProducts] = useState([])
+    const getRandomProducts = async () =>{
+      try {
+        const response = await fetch('/api/products/get-random')
+        const result = await response.json()
+
+      if (result) {
+        setProducts(result)
+        return
+      }
+
+      setProducts([])
+      } catch (error) {
+        console.log(error)
+        alert(error)
+      }
+    }
+    
+  useEffect(() => { getRandomProducts() }, [])
   return (
     <>
     <div>

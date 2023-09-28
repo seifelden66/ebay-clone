@@ -1,54 +1,89 @@
-import React from 'react'
-import MainLayout from '../layouts/MainLayout'
-import SimilarProducts from '../components/SimilarProducts'
-import CartItem from '../components/CartItem'
+"use client"
 
-const cart = () => {
-    const product = 
-        {
-          id:1,
-          title:'hk',
-          description:'lordgjglsdjgajhgdsjkgem19',
-          url:'https://picsum.photos/id/7',
-          price:2500
-        }
+import MainLayout from "../layouts/MainLayout"
+import SimilarProducts from "../components/SimilarProducts"
+import CartItem from "../components/CartItem"
+import { useCart } from "../context/cart"
+import { useEffect, useState } from "react"
+import { useRouter } from "next/navigation"
+import { useUser } from "@/app/context/user";
+
+
+import useIsLoading from "../hooks/useIsLoading"
+import ClientOnly from "../components/ClientOnly"
+
+export default function Cart() {
+  const user = useUser();
+  const router = useRouter()
+  const cart = useCart()
+  const [addressDetails, setAddressDetails] = useState({})
+  const [isLoadingAddress, setIsLoadingAddress] = useState(false)
+  
+  useEffect(() => { 
+    useIsLoading(true)
+    cart.getCart() 
+    cart.cartTotal()
+    useIsLoading(false)
+  }, [cart])
+
+  const goToCheckout = () => {
+    if (!cart.cartTotal()) {
+      alert("You don't have any items in the cart.")
+      return
+    }
+    router.push('/')
+    cart.clearCart()
+  }
+
   return (
     <>
-    <MainLayout>
-     <div className="max-w-[1200px] mx-auto mb-8 min-h-[300px] ">
-      <div className="text-2xl font-bold my-4">Shopping Cart</div>
-      <div className="relative flex 
-      items-baseline justify-between gap-2">
-        <div className="w-[65%]">
-            <CartItem key={product.id} product={product} />
-        </div>
-        <div className="md:w-[33%] absolute top-0 right-0 m-2">
-          <div className="bg-white p-4 border">
-            <button className=" rounded-full bg-blue-600 text-white w-full py-4">
-              Check Out
-            </button>
-            <div className="flex items-center mt-4 justify-between text-sm mb-1">
-               <div>item (3)</div>
-               <div>$12.66</div>
-            </div>
-            <div className="flex items-center mb-4 justify-between text-sm">
-               <div>shipping</div>
-               <div>free</div>
-            </div>
-            <div className="border-b border-gray-300"/>
-            <div className="flex items-center justify-between text-lg mt-4">
-              <div>subtotal</div>
-              <div>$12.66</div>
+        <MainLayout>
+          <div className="max-w-[1200px] mx-auto mb-8 min-h-[300px]">
+            <div className="text-2xl font-bold my-4">Shopping cart</div>
+            <div className="relative flex items-baseline justify-between gap-2">
+              <ClientOnly>
+                <div className="w-[65%]">
+                  {cart.getCart().map(product => (
+                    <CartItem key={product.id} product={product}/>
+                  ))}
+                </div>
+              </ClientOnly>
+
+              <div id="GoToCheckout" className="md:w-[33%] absolute top-0 right-0 m-2">
+                  <ClientOnly>
+                      <div className="bg-white p-4 border">
+                          
+                          <button 
+                            onClick={() => goToCheckout()} 
+                            className="flex items-center justify-center bg-blue-600 w-full text-white font-semibold p-3 rounded-full mt-4"
+                          >
+                              Confirm
+                          </button>
+
+                          <div className="flex items-center justify-between mt-4 text-sm mb-1">
+                              <div>Items ({cart.getCart().length})</div>
+                              <div>£{(cart.cartTotal() / 100).toFixed(2)}</div>
+                          </div>
+                          <div className="flex items-center justify-between mb-4 text-sm">
+                              <div>Shipping:</div>
+                              <div>Free</div>
+                          </div>
+
+                          <div className="border-b border-gray-300"/>
+
+                          <div className="flex items-center justify-between mt-4 mb-1 text-lg font-semibold">
+                              <div>Subtotal</div>
+                              <div>£{(cart.cartTotal() / 100).toFixed(2)}</div>
+                          </div>
+                      </div>
+                  </ClientOnly>
+              </div>
             </div>
           </div>
-        </div>
 
-      </div>
-     </div>
-    <SimilarProducts />
-    </MainLayout>
+          <SimilarProducts/>
+
+      </MainLayout>
     </>
   )
 }
-
-export default cart

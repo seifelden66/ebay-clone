@@ -1,26 +1,29 @@
-import './globals.css'
-import type { Metadata } from 'next'
-import {ToastContainer} from 'react-toastify'
-import { Inter } from 'next/font/google'
-import 'react-toastify/dist/ReactToastify.css'
+import "./globals.css"
+import UserProvider from './context/user'
+import CartProvider from './context/cart'
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-const inter = Inter({ subsets: ['latin'] })
-
-export const metadata: Metadata = {
+export const metadata = {
   title: 'eBay Clone',
-  description: 'eBay',
+  description: 'eBay Clone',
 }
+ 
+export default function RootLayout({ children }) {
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
-  return (
+ return (
     <html lang="en">
-      <body className={inter.className}>
-        <ToastContainer />
-        {children}</body>
+      <body>
+        <div>
+          <ToastContainer />
+
+          <UserProvider>
+            <CartProvider>
+              {children}
+            </CartProvider>
+          </UserProvider>
+        </div>
+      </body>
     </html>
   )
 }

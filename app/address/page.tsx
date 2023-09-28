@@ -37,7 +37,7 @@ export default function Home() {
     const [error, setError] = useState({})
 
     const showError = (type: string): string => {
-        if (Object.entries(error).length > 0 && error?.type == type) {
+        if (Object.entries(error).length > 0 && error.type == type) {
             return error.message
         }
         return ''

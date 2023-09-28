@@ -1,18 +1,25 @@
-'use client'
-
+import { ReactNode, useState, ChangeEvent, MouseEvent } from "react";
 import { debounce } from "debounce";
 import Link from "next/link";
-import { useState } from "react";
 import { AiOutlineSearch } from 'react-icons/ai'
 import { BiLoaderCircle } from 'react-icons/bi'
 
+interface Product {
+  id: number;
+  url: string;
+  title: string;
+  price: number;
+}
+
 export default function MainLayout() {
 
-    const [items, setItems] = useState([])
-    const [isSearching, setIsSearching] = useState(null)
+    const [items, setItems] = useState<Product[]>([])
+    const [isSearching, setIsSearching] = useState<boolean | null>(null)
 
-    const handleSearchName = debounce(async (event) => {
-        if (event.target.value == "") {
+    const handleSearchName = debounce(async (event: ChangeEvent<HTMLInputElement>) => {
+        const value = event.target.value;
+
+        if (value === "") {
             setItems([])
             return
         }
@@ -20,7 +27,7 @@ export default function MainLayout() {
         setIsSearching(true)
 
         try {
-            const response = await fetch(`/api/products/search-by-name/${event.target.value}`)
+            const response = await fetch(`/api/products/search-by-name/${value}`)
             const result = await response.json()
 
             if (result) {
@@ -31,10 +38,10 @@ export default function MainLayout() {
             setItems([])
             setIsSearching(false)
         } catch (error) {
-            console.log(error)
+            console.error(error)
             alert(error)
         }
-    }, 500)
+    }, 500) as (event: ChangeEvent<HTMLInputElement>) => void;
     
     return (
         <>
@@ -43,7 +50,7 @@ export default function MainLayout() {
                     <div className="flex items-center w-full bg-white">
                         <div className="flex lg:justify-start justify-between gap-2 max-w-[1150px] w-full px-3 py-5 mx-auto">
                             <Link href="/">
-                                <img width="120" src="/images/logo.svg" />
+                                <img alt="img" width="120" src="/images/logo.svg" />
                             </Link>
 
                             <div className="w-full">
@@ -52,9 +59,9 @@ export default function MainLayout() {
                                     <div className="flex items-center">
                                         <div className="relative flex items-center border-2 border-gray-900 w-full p-2">
                                             
-                                            <button className="flex items-center">
+                                            <div className="flex items-center">
                                                 <AiOutlineSearch size={22}/>
-                                            </button>
+                                            </div>
 
                                             <input 
                                                 className="
@@ -80,7 +87,7 @@ export default function MainLayout() {
                                                                 className="flex items-center justify-between w-full cursor-pointer hover:bg-gray-200 p-1 px-2"
                                                             >
                                                                 <div className="flex items-center">
-                                                                    <img className="rounded-md" width="40" src={item?.url+'/40'} />
+                                                                    <img alt="img" className="rounded-md" width="40" src={item?.url+'/40'} />
                                                                     <div className="truncate ml-2">{ item?.title }</div>
                                                                 </div>
                                                                 <div className="truncate">£{ (item?.price / 100).toFixed(2) }</div>
@@ -92,7 +99,13 @@ export default function MainLayout() {
 
                                         </div>
 
-                                        <button className="flex items-center bg-blue-600 text-sm font-semibold text-white p-3 ml-2 px-5">
+                                        <button 
+                                            className="flex items-center bg-blue-600 text-sm font-semibold text-white p-3 ml-2 px-5"
+                                            onClick={(e: MouseEvent<HTMLButtonElement>) => {
+                                                e.preventDefault();
+                                                // Add search functionality here if needed
+                                            }}
+                                        >
                                             Search
                                         </button>
 
@@ -106,5 +119,4 @@ export default function MainLayout() {
             </div>
         </>
     )
-  }
-  
+}

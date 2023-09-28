@@ -1,7 +1,5 @@
 "use client"
 
-// https://nextjs.org/docs/messages/react-hydration-error#solution-1-using-useeffect-to-run-on-the-client-only
-
 import MainLayout from "../layouts/MainLayout"
 import TextInput from "../components/TextInput"
 import { useEffect, useState } from "react"
@@ -13,6 +11,17 @@ import { AiOutlineLoading3Quarters } from "react-icons/ai"
 import { useRouter } from "next/navigation"
 import { toast } from 'react-toastify';
 import ClientOnly from "../components/ClientOnly"
+
+interface Address {
+    id: number;
+    name: string;
+    address: string;
+    zipcode: string;
+    city: string;
+    country: string;
+  }
+  
+
 
 export default function Home() {
     const router = useRouter()
@@ -27,7 +36,7 @@ export default function Home() {
     const [isUpdatingAddress, setIsUpdatingAddress] = useState(false)
     const [error, setError] = useState({})
 
-    const showError = (type) => {
+    const showError = (type: string): string => {
         if (Object.entries(error).length > 0 && error?.type == type) {
             return error.message
         }
@@ -55,7 +64,7 @@ export default function Home() {
         getAdddress()
     }, [user])
 
-    const setTheCurrentAddres = (result) => {
+    const setTheCurrentAddres = (result: Address) => {
         setAddressId(result.id)
         setName(result.name)
         setAddress(result.address)
@@ -64,7 +73,7 @@ export default function Home() {
         setCountry(result.country)
     }
 
-    const validate = () => {
+    const validate = (): boolean => {
         setError(null)
         setError({})
         let isError = false
@@ -114,7 +123,7 @@ export default function Home() {
 
             toast.success('Address updated!', { autoClose: 3000 })
 
-            router.push('/checkout')
+            router.push('/cart')
         } catch (error) {
             setIsUpdatingAddress(false)
             console.log(error)

@@ -120,7 +120,7 @@ export default function Cart() {
               <div className="border rounded flex items-center p-2 relative">
                 <div className="flex items-center gap-12 ">
                   {!isLoadingAddress ?
-                    <Link href="/address" className="hover:bg-blue-600 bg-blue-500 text-sm absolute bottom-3 right-1 text-white p-2 rounded ">
+                    <Link href="/address" className="hover:bg-blue-700 transition bg-blue-600 text-sm absolute bottom-3 right-1 text-white p-2 rounded ">
                       {addressDetails.name ? 'Update Address' : 'Add Address'}
                     </Link>
                     : null}
@@ -152,7 +152,7 @@ export default function Cart() {
                       <button
                         onClick={() => goToCheckout()}
                         className="flex items-center justify-center bg-blue-600  
-                        text-white font-semibold p-3 rounded mt-4 absolute bottom-3 right-3"
+                        text-white hover:bg-blue-700 transition p-3 rounded mt-4 absolute bottom-3 right-3"
                       >
                         Confirm
                       </button>

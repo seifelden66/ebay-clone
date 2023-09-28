@@ -3,8 +3,8 @@
 import MainLayout from "../layouts/MainLayout"
 import TextInput from "../components/TextInput"
 import { useEffect, useState } from "react"
-import { useUser } from "@/app/context/user"
-import useIsLoading from "@/app/hooks/useIsLoading"
+import { useUser } from "../context/user"
+import useIsLoading from "../hooks/useIsLoading"
 import useCreateAddress from "../hooks/useCreateAddress"
 import useUserAddress from "../hooks/useUserAddress"
 import { AiOutlineLoading3Quarters } from "react-icons/ai"
@@ -25,7 +25,7 @@ interface Address {
 
 export default function Home() {
     const router = useRouter()
-    const { user } = useUser()
+    const  user  = useUser()
 
     const [addressId, setAddressId] = useState(null)
     const [name, setName] = useState('')
